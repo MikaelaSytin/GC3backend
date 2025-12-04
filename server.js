@@ -25,14 +25,20 @@ const adminRoutes = require("./routes/adminRoutes");
 const app = express();
 
 const PORT = process.env.PORT || 4000;
+
+// IMPORTANT: prefer cloud/Atlas URI
 const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/courtify";
+  process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/courtify";
+
 const CLIENT_ORIGIN =
   process.env.CLIENT_ORIGIN || "http://localhost:4000";
 
 /* -------------------------
    Global middleware
    ------------------------- */
+
+// trust Render's proxy so express-rate-limit & IP stuff works
+app.set("trust proxy", 1);
 
 // CORS (front-end to back-end)
 app.use(
@@ -45,9 +51,6 @@ app.use(
 // Body parsing
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
-
-// Security headers (Helmet disabled for local dev so inline <script> can run)
-// If you deploy to production, add helmet back with an external JS file instead of inline.
 
 // Basic anti-abuse: rate limit (prevents brute force)
 const limiter = rateLimit({
@@ -119,7 +122,7 @@ app.get("/api/services", (req, res) => {
   ];
   res.json({ success: true, services });
 });
-  
+
 app.listen(PORT, () => {
   console.log(`Courtify server running on http://localhost:${PORT}`);
 });

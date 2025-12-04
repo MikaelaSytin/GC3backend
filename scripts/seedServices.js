@@ -2,14 +2,13 @@
 
 require("dotenv").config();
 const mongoose = require("mongoose");
-const path = require("path");
 
 // Make sure we can require models with correct relative path
 const Service = require("../models/Service");
 
-// Use the same URI as your server
+// Use the same URI as your server (Atlas in production)
 const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/courtify";
+  process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/courtify";
 
 async function run() {
   try {
@@ -43,7 +42,6 @@ async function run() {
 
     const result = await Service.insertMany(services);
     console.log(`🌱 Inserted ${result.length} services`);
-
   } catch (err) {
     console.error("❌ Seed error:", err);
   } finally {
