@@ -1,12 +1,20 @@
+// controllers/serviceController.js
+
 const Service = require("../models/Service");
 
-exports.getServices = async (req, res) => {
+// GET /api/services
+exports.getServices = async (req, res, next) => {
   try {
-    const services = await Service.find({});
-    res.json({ success: true, services });
+    // return ALL services in the collection
+    const services = await Service.find();   // 👈 no filters
+
+    res.json({
+      success: true,
+      services,
+    });
   } catch (err) {
-    console.error("getServices error:", err);
-    res.status(500).json({ success: false, error: "Server error" });
+    console.error("Error fetching services:", err);
+    next(err);
   }
 };
 
