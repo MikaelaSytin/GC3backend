@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const Service = require("../models/Service");
 
 const MONGO_URI =
-  process.env.MONGODB_URI ||
-  process.env.MONGO_URI ||
-  "mongodb://127.0.0.1:27017/courtify";
+  "mongodb+srv://mikaelasytin_db_user:moC6Ya8rV4jfNO23@cluster0.wgervcl.mongodb.net/courtify?retryWrites=true&w=majority&appName=Cluster0";
+
+console.log("🔗 Using Mongo URI in seedServices.js:", MONGO_URI);
+
 
 async function run() {
   try {

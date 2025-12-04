@@ -28,7 +28,10 @@ const PORT = process.env.PORT || 4000;
 
 // IMPORTANT: prefer cloud/Atlas URI
 const MONGO_URI =
-  process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/courtify";
+  "mongodb+srv://mikaelasytin_db_user:moC6Ya8rV4jfNO23@cluster0.wgervcl.mongodb.net/courtify?retryWrites=true&w=majority&appName=Cluster0";
+
+console.log("🔗 Using Mongo URI in server.js:", MONGO_URI);
+
 
 const CLIENT_ORIGIN =
   process.env.CLIENT_ORIGIN || "http://localhost:4000";
